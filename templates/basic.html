@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:#FF8800">  <!-- NAVIGATION COLOR -->
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/"><text style="font-family:SEGOE SCRIPT;">Пере Travel</text></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Маршрути</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Контакти</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin">Disabled</a>
+          </li>
+        </ul>
+      </div>
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/login">Войти</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/register">Регистрация</a>
+          </li>
+        </ul>
+    </div>
+  </nav>
+{% block body %}{% endblock %}
+  <div  style="background-color:#FF8800">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top container">
+      <p class="col-md-4 mb-0">© 2021 ПереТревел</p>
+
+      <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" >
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+      </a>
+
+      <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="#" class="nav-link px-2" style="color:white">Наверх</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2" style="color:white">Про нас</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2" style="color:white">Добавить маршрут</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2" style="color:white">Контакты</a></li>
+      </ul>
+    </footer>
+  </div>
+</body>
