@@ -9,25 +9,41 @@
 
 <body class="text-center">
 <div style="height:600px; width:400px; margin:auto; margin-top:200px">
-  <form>
+  <form class="needs-validation" novalidate="" method="POST" action="">
+    {{ form.csrf_token }}
     <img class="mb-4" src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Войдите в учётную запись</h1>
 
     <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
+
+      {{ form.email.label() }}
+	    {{ form.email() }}
+	    {% if form.email.errors %}
+		{% for error in form.email.errors %}
+		    {{ error }}
+		{% endfor %}
+	    {% endif %}
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
+      {{ form.password.label() }}
+	    {{ form.password() }}
+	    {% if form.password.errors %}
+		{% for error in form.password.errors %}
+		    {{ error }}
+		{% endfor %}
+	    {% endif %}
+
     </div>
 
     <div class="checkbox mb-3">
       <label>
-        <input type="checkbox" value="remember-me"> Запомнить меня
+        {{ form.remember.label() }}
+	    {{ form.remember() }}
+
       </label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
+    <div class="w-100 btn btn-lg btn-primary">    {{ form.submit() }}</div>
+
     <p class="mt-5 mb-3 text-muted">© 2022 </p>
   </form>
 </div>
