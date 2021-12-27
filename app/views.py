@@ -39,27 +39,8 @@ def login():
 
 @app.route('/admin')
 @login_required
-def adminn():
+def admin():
     return render_template('/admin/admin.html')
-
-
-@app.route('/register', methods=['POST', 'GET'])
-def register():
-    if request.method == 'POST':
-        first_name = request.form['FirstName']
-        last_name = request.form['LastName']
-        email = request.form['Email']
-        password = request.form['Password']
-        password_hash = generate_password_hash(password)
-        user = User(First_Name=first_name, Last_Name=last_name, email=email, password_hash=password_hash)
-        try:
-            db.session.add(user)
-            db.session.commit()
-            return redirect('/')
-        except Exception as e:
-            return e
-    else:
-        return render_template('/register.html')
 
 
 @app.route('/addpost', methods=['POST', 'GET'])
@@ -88,7 +69,6 @@ def addpost():
 @app.route('/post/<int:id>')
 def get_exect_post(id):
     article_exect = Article.query.get(id)
-    print(article_exect.title)
     return render_template('post.html', article_exect=article_exect)
 
 
@@ -98,4 +78,24 @@ def logout():
     logout_user()
     return redirect('/')
 
+
+@app.route('/register', methods=['post', 'get'])
+def register():
+    if current_user.is_authenticated:
+        return redirect('/')
+    form = RegisterForm()
+    if form.validate_on_submit():
+        first_name = form.first_name.data
+        last_name = form.last_name.data
+        email = form.email.data
+        password = form.password
+        password_hash = generate_password_hash(password.data)
+        user = User(First_Name=first_name, Last_Name=last_name, email=email, password_hash=password_hash)
+        try:
+            db.session.add(user)
+            db.session.commit()
+            return 'succses'
+        except Exception as e:
+            return e
+    return render_template('register.html', form=form)
 

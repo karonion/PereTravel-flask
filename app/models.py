@@ -5,8 +5,8 @@ from flask_login import (LoginManager, UserMixin, login_required,
                          login_user, current_user, logout_user)
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
-from wtforms.validators import DataRequired, Email
-from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField
+from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField, Form
 
 
 class Article(db.Model):
@@ -53,5 +53,14 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[Email(message='Проверьте правильность ввода'), DataRequired(message='Поле не может быть пустым')])
     password = PasswordField('Password', validators=[DataRequired(message='Поле не может быть пустым')])
     remember = BooleanField('Remember Me')
+    submit = SubmitField()
+
+
+class RegisterForm(FlaskForm):
+    first_name = StringField('Имя', validators=[DataRequired(message='Поле не может быть пустым')])
+    last_name = StringField('Фамилия', validators=[DataRequired(message='Поле не может быть пустым')])
+    email = StringField('Email', validators=[Email(message='Проверьте правильность ввода'), DataRequired(message='Поле не может быть пустым')])
+    password = PasswordField('Пароль', validators=[DataRequired(), EqualTo('confirm_password', message='Пароли должны совпадать')])
+    confirm_password = PasswordField('Повторите пароль')
     submit = SubmitField()
 
