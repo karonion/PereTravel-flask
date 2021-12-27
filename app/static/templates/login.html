@@ -13,11 +13,9 @@
     {{ form.csrf_token }}
     <img class="mb-4" src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Войдите в учётную запись</h1>
-
     <div class="form-floating">
-
       {{ form.email.label() }}
-	    {{ form.email() }}
+	    {{ form.email(class_="form-control") }}
 	    {% if form.email.errors %}
 		{% for error in form.email.errors %}
 		    {{ error }}
@@ -26,7 +24,7 @@
     </div>
     <div class="form-floating">
       {{ form.password.label() }}
-	    {{ form.password() }}
+	    {{ form.password(class_="form-control") }}
 	    {% if form.password.errors %}
 		{% for error in form.password.errors %}
 		    {{ error }}
@@ -35,14 +33,12 @@
 
     </div>
 
-    <div class="checkbox mb-3">
       <label>
         {{ form.remember.label() }}
-	    {{ form.remember() }}
+	    {{ form.remember(class_="checkbox mb-3") }}
 
       </label>
-    </div>
-    <div class="w-100 btn btn-lg btn-primary">    {{ form.submit() }}</div>
+    <div>  {{ form.submit(class_="w-100 btn btn-lg btn-primary") }}</div>
 
     <p class="mt-5 mb-3 text-muted">© 2022 </p>
   </form>

@@ -1,0 +1,10 @@
+{% extends 'basic.html' %}
+{% block title %}{{ article_exect.title }}{% endblock %}
+{% block body%}
+<div class="container"><p> {{ article_exect.title }} </p>
+<p> {{ article_exect.preview }}</p>
+<p> {{ article_exect.text }}</p>
+<p> {{ article_exect.autorsname }}</p>
+<p> {{ article_exect.date }}</p>
+</div>
+{% endblock %}
