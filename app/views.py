@@ -1,8 +1,10 @@
-from app import app
+
 from flask import render_template, request, redirect, send_from_directory
+from app import app
 from flask_login import login_required, current_user, login_user, logout_user
+from werkzeug.utils import secure_filename
 from models import *
-from models import db
+#from models import db
 import os
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
@@ -53,7 +55,7 @@ def addpost():
         file = request.files['filepath']
         filename = 'default.jpeg'
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
+            filename = (file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         article = Article(title=title, preview=preview, text=text, autorsname=name, filepath=filename)
         try:
@@ -99,3 +101,18 @@ def register():
             return e
     return render_template('register.html', form=form)
 
+
+@app.route('/feedback', methods=['get', 'post'])
+def send_feedback():
+    form = FeedbackForm()
+    if form.validate_on_submit():
+        contact = form.contact.data
+        text = form.text.data
+        feedback = Feedback_db(contact=contact, text=text)
+        try:
+            db.session.add(feedback)
+            db.session.commit()
+            return redirect('/')
+        except Exception as e:
+            return e
+    return render_template('/feedback.html', form=form)
