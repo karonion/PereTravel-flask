@@ -4,8 +4,9 @@ from app import app
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.utils import secure_filename
 from models import *
-#from models import db
+from models import db
 import os
+from __init__ import Message, Email, mail
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 
@@ -27,16 +28,18 @@ def main():
 
 @app.route('/login', methods=['post', 'get'])
 def login():
+    message = ''
     if current_user.is_authenticated:
-        return redirect('/')
+        message = 'Вы уже авторизованы!'
+        return render_template('main.html', message=message)
     form = LoginForm()
     if form.validate_on_submit():
         user = db.session.query(User).filter(User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember.data)
-            return 'success'
+            return redirect('/')
         return 'wrong password\email'
-    return render_template('login.html', form=form)
+    return render_template('login.html', form=form, message=message)
 
 
 @app.route('/admin')
@@ -46,6 +49,7 @@ def admin():
 
 
 @app.route('/addpost', methods=['POST', 'GET'])
+@login_required
 def addpost():
     if request.method == 'POST':
         title = request.form['title']
@@ -61,7 +65,11 @@ def addpost():
         try:
             db.session.add(article)
             db.session.commit()
-            return redirect('/addpost')
+            msg = Message(f'Вдала реєстрація!', sender='ig.vasylenko2@gmail.com', recipients=['karonion4ik@gmail.com'])
+            msg.body = r'hello'
+            msg.html = render_template(r'Registration-email.html')
+            mail.send(msg)
+            return redirect('/')
         except Exception as e:
             return e
     else:
@@ -96,6 +104,9 @@ def register():
         try:
             db.session.add(user)
             db.session.commit()
+            msg = Message(f'Вдала реєстрація!', sender='ig.vasylenko2@gmail.com', recipients=[f'{email}'])
+            msg.html = render_template(r'Registration-email.html', login=email, password=password.data)
+            mail.send(msg)
             return 'succses'
         except Exception as e:
             return e

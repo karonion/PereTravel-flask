@@ -9,9 +9,13 @@
 
 <body class="text-center">
 <div style="height:600px; width:400px; margin:auto; margin-top:200px">
+
   <form class="needs-validation" novalidate="" method="POST" action="">
     {{ form.csrf_token }}
     <img class="mb-4" src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+      {% for category, message in get_flashed_messages(with_categories=true) %}
+        <spam class="{{ category }} ">{{ message }}</spam>
+    {% endfor %}
     <h1 class="h3 mb-3 fw-normal">Войдите в учётную запись</h1>
     <div class="form-floating">
       {{ form.email.label() }}

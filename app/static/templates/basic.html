@@ -27,6 +27,17 @@
           </li>
         </ul>
       </div>
+      {% if current_user.is_authenticated %}
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="">Привет {{ current_user.First_Name }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="logout">Выход</a>
+          </li>
+        </ul>
+
+      {% else %}
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/login">Войти</a>
@@ -38,6 +49,7 @@
             <a class="nav-link active" aria-current="page" href="/register">Регистрация</a>
           </li>
         </ul>
+             {% endif %}
     </div>
   </nav>
 {% block body %}{% endblock %}
@@ -52,7 +64,7 @@
       <ul class="nav col-md-4 justify-content-end">
         <li class="nav-item"><a href="#" class="nav-link px-2" style="color:white">Наверх</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2" style="color:white">Про нас</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2" style="color:white">Добавить маршрут</a></li>
+        <li class="nav-item"><a href="/addpost" class="nav-link px-2" style="color:white">Добавить маршрут</a></li>
         <li class="nav-item"><a href="feedback" class="nav-link px-2" style="color:white">Контакты</a></li>
       </ul>
     </footer>

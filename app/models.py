@@ -21,7 +21,7 @@ class Article(db.Model):  # Посты, БД
     text = db.Column(db.String, nullable=False)
     autorsname = db.Column(db.String(128), nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow())
-    filepath = db.Column(db.String(128), default='http://127.0.0.1:5000/images/default.jpeg')
+    filepath = db.Column(db.String(128), default='default.jpg')
     rates = db.Column(db.Integer, default=0)
 
     def __repr__(self):
@@ -83,5 +83,8 @@ class FeedbackForm(FlaskForm):  # Обратная связь, форма
     contact = StringField('Контактные данные')
     text = TextAreaField(validators=[DataRequired(message='Поле не может быть пустым')])
     submit = SubmitField()
+
+
+
 
 

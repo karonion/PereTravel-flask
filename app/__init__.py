@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_login import LoginManager
+from flask_mail import Mail, Message
 
 
 app = Flask(__name__, template_folder='static/templates')
@@ -13,16 +14,17 @@ UPLOAD_FOLDER = r'C:\Users\Игорь\PycharmProjects\PereTravel\app\static\uplo
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+login_manager.login_message = 'Будь-ласка, авторизуйтесь'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'ig.vasylenko2@gmail.com'
+app.config['MAIL_DEFAULT_SENDER'] = 'ig.vasylenko2@gmail.com'
+app.config['MAIL_PASSWORD'] = '1dn2qy36'
+mail = Mail(app)
 
-class Feedback_db(db.Model):  # Обратная связь, БД
-    __tablename__ = 'user_feedback'
-    id = db.Column(db.Integer, primary_key=True)
-    contact = db.Column(db.String(100))
-    text = db.Column(db.String(100), nullable=False)
-    created = db.Column(db.DateTime(), default=datetime.utcnow())
-
-    def __repr__(self):
-        return '<Feedback %r>' % self.id
 
 
 from views import *
