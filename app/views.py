@@ -65,9 +65,8 @@ def addpost():
         try:
             db.session.add(article)
             db.session.commit()
-            msg = Message(f'Вдала реєстрація!', sender='ig.vasylenko2@gmail.com', recipients=['karonion4ik@gmail.com'])
-            msg.body = r'hello'
-            msg.html = render_template(r'Registration-email.html')
+            msg = Message(f'Новий пост!', sender='ig.vasylenko2@gmail.com', recipients=['karonion4ik@gmail.com'])
+            msg.body = f'Був доданий новий пост від користувача {name}, {datetime.utcnow().date()}'
             mail.send(msg)
             return redirect('/')
         except Exception as e:
