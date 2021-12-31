@@ -1,4 +1,3 @@
-
 from flask import render_template, request, redirect, send_from_directory
 from app import app
 from flask_login import login_required, current_user, login_user, logout_user

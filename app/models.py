@@ -3,8 +3,8 @@ from flask_login import (LoginManager, UserMixin, login_required,
                          login_user, current_user, logout_user)
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField
 from wtforms.validators import DataRequired, Email, EqualTo
-from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField, Form
 from datetime import datetime
 
 
@@ -83,6 +83,7 @@ class FeedbackForm(FlaskForm):  # Обратная связь, форма
     contact = StringField('Контактные данные')
     text = TextAreaField(validators=[DataRequired(message='Поле не может быть пустым')])
     submit = SubmitField()
+
 
 
 

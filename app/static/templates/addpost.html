@@ -31,9 +31,11 @@
               <label for="address" class="form-label">Страна маршрута</label>
               <input name="preview" type="text" class="form-control" id="address" placeholder="Дания" required="">
               <div class="invalid-feedback">
-                Please enter your shipping address.
               </div>
             </div>
+            <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+
              <div class="col-12">
                <label class="form-label">Текст</label>
                <textarea name="text" class="form-control" id="text" placeholder="" required="" style="height:300px"> </textarea>
@@ -75,6 +77,8 @@ let inputs = document.querySelectorAll('.input__file');
       });
     });
 </script>
+
+
 
 {% endblock %}
 
