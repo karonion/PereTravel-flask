@@ -4,8 +4,8 @@
 {% if current_user.is_authenticated %}
 {% if current_user.email == 'admin@ukr.net' %}
     <div class="row py-lg-5 container">
-          <a href="#" class="btn btn-primary my-2">Фидбек</a>
-          <a href="/addpost" class="btn btn-secondary my-2">Добавить пост</a>
+          <a href="/getfeedback" class="btn btn-primary my-2">feedback</a>
+          <a href="/addpost" class="btn btn-secondary my-2">Додати пост</a>
           <a href="#" class="btn btn-primary my-2">Редактировать пост</a>
     </div>
 {% endif %}

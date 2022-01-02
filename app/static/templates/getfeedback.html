@@ -1,0 +1,27 @@
+{% extends 'basic.html' %}
+{% block title %}Головна{% endblock %}
+{% block body%}
+
+<div class="album py-5 ">
+    <div class="container">
+        <br>
+        <h2>Зворотній зв'язок</h2>
+{% for el in feedback_scope %}
+        <div class="col">
+          <div class="card shadow-sm">
+
+            <div class="card-body">
+              <p class="card-text">{{ el.text }}...</p>
+              <div class="d-flex justify-content-between align-items-center">
+                  <small class=""><b>Створено:</b> {{ el.created.date() }}</small>
+                  <small class=""><b>Контакт:</b> {{ el.contact }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+{% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

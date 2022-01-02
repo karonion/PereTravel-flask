@@ -4,11 +4,9 @@ from flask_login import (LoginManager, UserMixin, login_required,
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField
-from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms.validators import DataRequired, Email, EqualTo, length
 from datetime import datetime
 from flask_ckeditor import CKEditorField
-
-
 
 
 @login_manager.user_loader  # Пытаемся авторизовать пользователя при входе
@@ -64,34 +62,30 @@ class Feedback_db(db.Model):  # Обратная связь, БД
 
 
 class LoginForm(FlaskForm):  # Логинизация, форма
-    email = StringField('Email', validators=[Email(message='Проверьте правильность ввода'),
-                                             DataRequired(message='Поле не может быть пустым')])
-    password = PasswordField('Password', validators=[DataRequired(message='Поле не может быть пустым')])
-    remember = BooleanField('Remember Me')
-    submit = SubmitField()
+    email = StringField('Email', validators=[Email(message='Перевірте коректність вводу'),
+                                             DataRequired(message='Поле не може бути пустим')])
+    password = PasswordField('Пароль', validators=[DataRequired(message='Поле не може бути пустим')])
+    remember = BooleanField("Запам'ятати мене")
+    submit = SubmitField(label='Увійти')
 
 
 class RegisterForm(FlaskForm):  # Регистрация, форма
-    first_name = StringField('Имя', validators=[DataRequired(message='Поле не может быть пустым')])
-    last_name = StringField('Фамилия', validators=[DataRequired(message='Поле не может быть пустым')])
-    email = StringField('Email', validators=[Email(message='Проверьте правильность ввода'),
-                                             DataRequired(message='Поле не может быть пустым')])
+    first_name = StringField("Ім'я", validators=[DataRequired(message='Поле не може бути пустим')])
+    last_name = StringField('Фамілія', validators=[DataRequired(message='Поле не може бути пустим')])
+    email = StringField('Email', validators=[Email(message='Перевірте коректність вводу'),
+                                             DataRequired(message='Поле не може бути пустим')])
     password = PasswordField('Пароль', validators=[DataRequired(),
-                                                   EqualTo('confirm_password', message='Пароли должны совпадать')])
-    confirm_password = PasswordField('Повторите пароль')
-    submit = SubmitField()
+                                                   EqualTo('confirm_password', message='Паролі мають співпадати')])
+    confirm_password = PasswordField('Повторіть пароль')
+    submit = SubmitField(label='Реєстрація')
 
 
 class FeedbackForm(FlaskForm):  # Обратная связь, форма
-    contact = StringField('Контактные данные')
-    text = TextAreaField(validators=[DataRequired(message='Поле не может быть пустым')])
-    submit = SubmitField()
+    contact = StringField('Контактні данні')
+    text = TextAreaField(validators=[DataRequired(message='Поле не може бути пустим')], label='Текст')
+    submit = SubmitField(label='Відправити')
 
 
 class Addpost(FlaskForm):
-    body = CKEditorField(validators=[DataRequired(message='Поле не может быть пустым')])
-
-
-
-
-
+    body = CKEditorField(validators=[DataRequired(message='Поле не може бути пустим'),
+                                     length(min=30, message='Додайте опис до вашого маршруту!')])

@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, send_from_directory
+from flask import render_template, request, redirect, send_from_directory, url_for
 from app import app
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.utils import secure_filename
@@ -6,6 +6,7 @@ from models import *
 from models import db
 import os
 from __init__ import Message, Email, mail
+
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 
@@ -54,12 +55,12 @@ def addpost():
     if request.method == 'POST':
         title = request.form['title']
         preview = request.form['preview']
-        text = request.form['text']
+        text = form.body.data
         name = request.form['autorsname']
         file = request.files['filepath']
         filename = 'default.jpeg'
         if file and allowed_file(file.filename):
-            filename = (file.filename)
+            filename = file.filename
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         article = Article(title=title, preview=preview, text=text, autorsname=name, filepath=filename)
         try:
@@ -90,6 +91,7 @@ def logout():
 
 @app.route('/register', methods=['post', 'get'])
 def register():
+    message = ''
     if current_user.is_authenticated:
         return redirect('/')
     form = RegisterForm()
@@ -106,7 +108,8 @@ def register():
             msg = Message(f'Вдала реєстрація!', sender='ig.vasylenko2@gmail.com', recipients=[f'{email}'])
             msg.html = render_template(r'Registration-email.html', login=email, password=password.data)
             mail.send(msg)
-            return 'succses'
+            message = 'Вдала реєстрація! Скористуйтесь логіном та паролем. Вони відправлені вам на пошту'
+            return 'successful'
         except Exception as e:
             return e
     return render_template('register.html', form=form)
@@ -127,4 +130,8 @@ def send_feedback():
             return e
     return render_template('/feedback.html', form=form)
 
-
+@app.route('/getfeedback')
+@login_required
+def get_feedback():
+    feedback_scope = Feedback_db.query.order_by(Feedback_db.created.desc())
+    return render_template('getfeedback.html', feedback_scope=feedback_scope)

@@ -33,8 +33,6 @@ mail = Mail(app)
 ckeditor = CKEditor(app)
 
 
-
-
 from views import *
 
 
