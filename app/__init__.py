@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_login import LoginManager
 from flask_mail import Mail, Message
+from flask_ckeditor import CKEditor
 
 
 app = Flask(__name__, template_folder='static/templates')
@@ -23,7 +24,14 @@ app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = 'ig.vasylenko2@gmail.com'
 app.config['MAIL_DEFAULT_SENDER'] = 'ig.vasylenko2@gmail.com'
 app.config['MAIL_PASSWORD'] = '1dn2qy36'
+app.config['CKEDITOR_PKG_TYPE'] = 'basic'
+app.config['CKEDITOR_LANGUAGE'] = 'ru'
+app.config['CKEDITOR_WIDTH'] = '1000'
+app.config['CKEDITOR_HEIGHT'] = '1000'
+app.config['CKEDITOR_FILE_UPLOADER'] = 'http://127.0.0.1:5000/images/'
 mail = Mail(app)
+ckeditor = CKEditor(app)
+
 
 
 

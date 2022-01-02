@@ -50,6 +50,7 @@ def admin():
 @app.route('/addpost', methods=['POST', 'GET'])
 @login_required
 def addpost():
+    form = Addpost()
     if request.method == 'POST':
         title = request.form['title']
         preview = request.form['preview']
@@ -71,7 +72,7 @@ def addpost():
         except Exception as e:
             return e
     else:
-        return render_template('/addpost.html')
+        return render_template('/addpost.html', form=form)
 
 
 @app.route('/post/<int:id>')
@@ -125,3 +126,5 @@ def send_feedback():
         except Exception as e:
             return e
     return render_template('/feedback.html', form=form)
+
+

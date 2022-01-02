@@ -6,6 +6,9 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField
 from wtforms.validators import DataRequired, Email, EqualTo
 from datetime import datetime
+from flask_ckeditor import CKEditorField
+
+
 
 
 @login_manager.user_loader  # Пытаемся авторизовать пользователя при входе
@@ -84,6 +87,9 @@ class FeedbackForm(FlaskForm):  # Обратная связь, форма
     text = TextAreaField(validators=[DataRequired(message='Поле не может быть пустым')])
     submit = SubmitField()
 
+
+class Addpost(FlaskForm):
+    body = CKEditorField(validators=[DataRequired(message='Поле не может быть пустым')])
 
 
 
