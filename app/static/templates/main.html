@@ -22,7 +22,7 @@
 {% for el in article_scope %}
         <div class="col">
           <div class="card shadow-sm">
-             <svg class=" card-img-top" width="100%" height="225" style="background-image:url(http://127.0.0.1:5000/images/{{el.filepath}}); background-size:cover;"  xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: {{ el.title }}" preserveAspectRatio="xMidYMid slice" focusable="false"><text x="2%" y="95%" fill="#eceeef" dy=".3em">{{ el.title }}</text></svg>
+             <svg class=" card-img-top" width="100%" height="525" style="background-image:url(http://127.0.0.1:5000/images/{{el.filepath}}); background-size:cover;"  xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: {{ el.title }}" preserveAspectRatio="xMidYMid slice" focusable="false"><text x="2%" y="95%" fill="#eceeef" dy=".3em">{{ el.title }}</text></svg>
 
             <div class="card-body">
               <p class="card-text">{{ el.text[0:10] | safe }}...</p>

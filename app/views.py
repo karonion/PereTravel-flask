@@ -4,6 +4,7 @@ from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.utils import secure_filename
 from models import *
 from models import db
+from flask_ckeditor import upload_fail, upload_success
 import os
 from __init__ import Message, Email, mail
 
@@ -15,9 +16,20 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 
-@app.route('/images/<filename>')
+@app.route('/images/<path:filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    f = request.files.get('upload')
+    extension = f.filename.split('.')[-1].lower()
+    if extension not in ['jpg', 'gif', 'png', 'jpeg']:
+        return upload_fail(message='Тільки фото!')
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'], f.filename))
+    url = url_for('uploaded_file', filename=f.filename)
+    return upload_success(url, filename=f.filename)
 
 
 @app.route('/')

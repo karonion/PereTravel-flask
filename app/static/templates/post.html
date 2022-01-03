@@ -1,10 +1,12 @@
 {% extends 'basic.html' %}
 {% block title %}{{ article_exect.title }}{% endblock %}
 {% block body%}
-<div class="container"><p> {{ article_exect.title }} </p>
-<p> {{ article_exect.preview }}</p>
-<p> {{ article_exect.text | safe }}</p>
-<p> {{ article_exect.autorsname }}</p>
-<p> {{ article_exect.date }}</p>
-</div>
+<div class="container-lg img">
+    <h1 class="mt-5">{{ article_exect.title }}</h1>
+    <p class="lead">{{ article_exect.text | safe }}</p>
+    <p>Мандрівник: {{ article_exect.autorsname }}</p>
+    <p> {{ article_exect.date }}</p>
+  </div>
+
+
 {% endblock %}

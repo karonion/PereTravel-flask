@@ -24,11 +24,12 @@ app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = 'ig.vasylenko2@gmail.com'
 app.config['MAIL_DEFAULT_SENDER'] = 'ig.vasylenko2@gmail.com'
 app.config['MAIL_PASSWORD'] = '1dn2qy36'
-app.config['CKEDITOR_PKG_TYPE'] = 'basic'
+app.config['CKEDITOR_PKG_TYPE'] = 'full'
 app.config['CKEDITOR_LANGUAGE'] = 'ru'
-app.config['CKEDITOR_WIDTH'] = '1000'
-app.config['CKEDITOR_HEIGHT'] = '1000'
-app.config['CKEDITOR_FILE_UPLOADER'] = 'http://127.0.0.1:5000/images/'
+app.config['CKEDITOR_WIDTH'] = '1500'
+app.config['CKEDITOR_HEIGHT'] = '500'
+app.config['CKEDITOR_FILE_UPLOADER'] = 'http://127.0.0.1:5000/upload'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
 mail = Mail(app)
 ckeditor = CKEditor(app)
 
