@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, send_from_directory, url_for
+from flask import render_template, request, redirect, send_from_directory, url_for, flash
 from app import app
 from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.utils import secure_filename
@@ -50,7 +50,9 @@ def login():
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember.data)
             return redirect('/')
-        return 'wrong password\email'
+        else:
+            flash('Невірний пароль або логін')
+            return redirect(url_for('login'))
     return render_template('login.html', form=form, message=message)
 
 
@@ -120,8 +122,8 @@ def register():
             msg = Message(f'Вдала реєстрація!', sender='ig.vasylenko2@gmail.com', recipients=[f'{email}'])
             msg.html = render_template(r'Registration-email.html', login=email, password=password.data)
             mail.send(msg)
-            message = 'Вдала реєстрація! Скористуйтесь логіном та паролем. Вони відправлені вам на пошту'
-            return 'successful'
+            flash('Вдала реєстрація! Скористуйтесь логіном та паролем. Вони відправлені Вам на пошту.')
+            return redirect(url_for('login'))
         except Exception as e:
             return e
     return render_template('register.html', form=form)
