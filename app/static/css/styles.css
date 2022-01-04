@@ -78,8 +78,13 @@
     box-shadow: inset 0 1px 1px rgba(255,136,0,.1),0 0 8px rgba(255,136,0,.1);
 }
 
+.error {
+    color:red
+}
 
-
+.success {
+    color:green
+}
 
 
 

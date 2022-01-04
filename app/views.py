@@ -51,7 +51,7 @@ def login():
             login_user(user, remember=form.remember.data)
             return redirect('/')
         else:
-            flash('Невірний пароль або логін')
+            flash(r'Невірний пароль або логін', 'error')
             return redirect(url_for('login'))
     return render_template('login.html', form=form, message=message)
 
@@ -122,7 +122,7 @@ def register():
             msg = Message(f'Вдала реєстрація!', sender='ig.vasylenko2@gmail.com', recipients=[f'{email}'])
             msg.html = render_template(r'Registration-email.html', login=email, password=password.data)
             mail.send(msg)
-            flash('Вдала реєстрація! Скористуйтесь логіном та паролем. Вони відправлені Вам на пошту.')
+            flash('Вдала реєстрація! Скористуйтесь логіном та паролем. Вони відправлені Вам на пошту.', 'success')
             return redirect(url_for('login'))
         except Exception as e:
             return e

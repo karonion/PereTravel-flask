@@ -16,10 +16,12 @@
 
     <h1 class="h3 mb-3 fw-normal">Вхід в обліковий запис</h1>
     {% for category, message in get_flashed_messages(with_categories=true) %}
-        <spam class="{{ category }}" style="color:red">{{ message }}</spam>
+        <spam class="{{ category }}">{{ message }}</spam>
     {% endfor %}
-    <div class="form-floating">
-      {{ form.email.label() }}
+      <div style="text-align:left">
+        {{ form.email.label() }}
+      </div>
+    <div class="form-floating input" style="">
 	    {{ form.email(class_="form-control") }}
 	    {% if form.email.errors %}
 		{% for error in form.email.errors %}
@@ -27,8 +29,10 @@
 		{% endfor %}
 	    {% endif %}
     </div>
+      <div style="text-align:left">
+        {{ form.password.label() }}
+      </div>
     <div class="form-floating">
-      {{ form.password.label() }}
 	    {{ form.password(class_="form-control") }}
 	    {% if form.password.errors %}
 		{% for error in form.password.errors %}
