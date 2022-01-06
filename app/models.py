@@ -71,7 +71,7 @@ class LoginForm(FlaskForm):  # Логинизация, форма
 
 class RegisterForm(FlaskForm):  # Регистрация, форма
     first_name = StringField("Ім'я", validators=[DataRequired(message='Поле не може бути пустим')])
-    last_name = StringField('Фамілія', validators=[DataRequired(message='Поле не може бути пустим')])
+    last_name = StringField('Прізвище', validators=[DataRequired(message='Поле не може бути пустим')])
     email = StringField('Email', validators=[Email(message='Перевірте коректність вводу'),
                                              DataRequired(message='Поле не може бути пустим')])
     password = PasswordField('Пароль', validators=[DataRequired(),
