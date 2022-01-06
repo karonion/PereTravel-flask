@@ -8,49 +8,53 @@
 </head>
 
 <body class="text-center">
-<div style="height:600px; width:400px; margin:auto; margin-top:200px">
-  <form class="needs-validation" novalidate="" method="POST" action="">
-    {{ form.csrf_token }}
-    <img class="mb-4" src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+<div class="container" style="margin-top:150px">
+    <div class="row justify-content-center">
+        <div class="col align-self-center col-md-4 col-lg-4">
+          <form class="needs-validation" novalidate="" method="POST" action="">
+            {{ form.csrf_token }}
+            <img class="mb-4" src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
 
 
-    <h1 class="h3 mb-3 fw-normal">Вхід в обліковий запис</h1>
-    {% for category, message in get_flashed_messages(with_categories=true) %}
-        <spam class="{{ category }}">{{ message }}</spam>
-    {% endfor %}
-      <div style="text-align:left">
-        {{ form.email.label() }}
-      </div>
-    <div class="form-floating input" style="">
-	    {{ form.email(class_="form-control") }}
-	    {% if form.email.errors %}
-		{% for error in form.email.errors %}
-		    {{ error }}
-		{% endfor %}
-	    {% endif %}
+            <h1 class="h3 mb-3 fw-normal">Авторизація</h1>
+            {% for category, message in get_flashed_messages(with_categories=true) %}
+                <div class="{{ category }}">{{ message }}</div>
+            {% endfor %}
+              <div style="text-align:left">
+                {{ form.email.label() }}
+              </div>
+            <div class="input" style="">
+                {{ form.email(class_="form-control form-control-sm") }}
+                {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    {{ error }}
+                {% endfor %}
+                {% endif %}
+            </div>
+              <div style="text-align:left">
+                {{ form.password.label() }}
+              </div>
+            <div class="">
+                {{ form.password(class_="form-control form-control-sm") }}
+                {% if form.password.errors %}
+                {% for error in form.password.errors %}
+                    {{ error }}
+                {% endfor %}
+                {% endif %}
+
+            </div>
+
+              <label>
+                {{ form.remember.label() }}
+                {{ form.remember(class_="checkbox mb-3 form-check-input") }}
+
+              </label>
+            <div>  {{ form.submit(class_="w-100 btn btn-md btn-warning") }}</div>
+
+            <p class="mt-5 mb-3 text-muted">© 2022 Пере Travel </p>
+        </form>
+        </div>
     </div>
-      <div style="text-align:left">
-        {{ form.password.label() }}
-      </div>
-    <div class="form-floating">
-	    {{ form.password(class_="form-control") }}
-	    {% if form.password.errors %}
-		{% for error in form.password.errors %}
-		    {{ error }}
-		{% endfor %}
-	    {% endif %}
-
-    </div>
-
-      <label>
-        {{ form.remember.label() }}
-	    {{ form.remember(class_="checkbox mb-3") }}
-
-      </label>
-    <div>  {{ form.submit(class_="w-100 btn btn-lg btn-primary") }}</div>
-
-    <p class="mt-5 mb-3 text-muted">© 2022 Пере Travel </p>
-  </form>
 </div>
 </body>
 </html>
