@@ -1,0 +1,25 @@
+{% extends 'basic.html' %}
+{% block title %}Обратная связь{% endblock %}
+{% block body%}
+<div class="container" style="margin-top:200px">
+    <form class="needs-validation" novalidate="" method="POST" action="">
+    {{ form.csrf_token }}
+    {{ form.contact.label() }}
+    {{ form.contact(class_="form-control") }}
+    {% if form.contact.errors %}
+        {% for error in form.contacts.errors %}
+            {{ error }}
+        {% endfor %}
+    {% endif %}
+
+    {{ form.text.label() }}
+    {{ form.text(class_="form-control") }}
+    {% if form.text.errors %}
+        {% for error in form.text.errors %}
+            {{ error }}
+        {% endfor %}
+    {% endif %}
+{{ form.submit(class_="w-100 btn btn-lg btn-primary") }}
+    </form>
+</div>
+{% endblock %}

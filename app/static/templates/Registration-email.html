@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width"/>
+
+    <!-- For development, pass document through inliner -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+</head>
+<body style="">
+<table style="background-color:#FF8800; width: 100% !important;
+                                      height: 100%;
+                                      -webkit-font-smoothing: antialiased;
+                                      -webkit-text-size-adjust: none;">
+    <tr>
+        <td class="containerr">
+
+            <!-- Message start -->
+            <table>
+                <tr>
+                    <td align="center" class="masthead">
+
+                        <h1 style="text-align: center;">З доєднанням!</h1>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="containerr">
+
+                        <h2>Привіт, мандрівник</h2>
+
+                        <p>Твої данні для входу на сайт:</p>
+                        <p><b>Email:</b> {{ login }}</p>
+                        <p><b>Пароль:</b> {{ password }}</p>
+
+                        <table>
+                            <tr>
+                                <td align="center">
+                                    <p>
+                                        <a href="#" class="buttonn">Перейти до сайту</a>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p><em>З повагою, адміністрація сайту</em></p>
+
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+    <tr>
+        <td class="container">
+
+            <!-- Message start -->
+            <table>
+                <tr>
+                    <td class="content footer" align="center">
+                        <p>Sent by <a href="#">Пере Travel</a>, м. Київ, вул. Павла Тичини, hub B</p>
+                        <p><a href="mailto:">ig.vasylenko2@gmail.com</a>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+</table>
+</body>
+</html>

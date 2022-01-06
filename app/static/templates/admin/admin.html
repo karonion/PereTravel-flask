@@ -1,0 +1,22 @@
+{% extends 'basic.html' %}
+{% block title %}Головна{% endblock %}
+{% block body%}
+{% if current_user.is_authenticated %}
+{% if current_user.email == 'admin@ukr.net' %}
+<div class="container">
+        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3" style="margin-top:100px">
+                <div class="col align-self-center">
+                    <a href="/getfeedback"><button class="btn btn-success my-2">feedback</button></a>
+                </div>
+                <div class="col">
+                    <a href="/addpost"><button class="btn btn-info my-2">Додати пост</button></a>
+                </div>
+                <div class="col">
+                    <a href="#"><button class="btn btn-warning my-2">Редагувати пост</button></a>
+                </div>
+            </div>
+</div>
+{% endif %}
+{% endif %}
+
+{% endblock %}
