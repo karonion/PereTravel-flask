@@ -3,18 +3,18 @@
 {% block body%}
 <div class="container" style="margin-top:70px" >
     <div class="raw">
-        <div class="col-md-8 offset-md-2">
-            <div class="card shadow-sm p-3">
-                <div class="text-center" >
+        <div class="col-md-8 offset-md-2 images-post">
+            <div class="card shadow-sm p-1" style="">
+                <div class="col-12" >
                     <img src="http://127.0.0.1:5000/images/{{article_exect.filepath}}" class="img-fluid" alt="{{ article_exect.title }}">
                 </div>
-                <p class="mt-5 h1">{{ article_exect.title }}</p>
+                <p class="mt-5 display-4">{{ article_exect.title }}</p>
                 <p class="lead text-capitalize">{{ article_exect.text | safe }}</p>
                 <div class="row justify-content-between">
                     <div class="col-8">
-                        <p class="text-capitalize"><span class="fw-bold"> Мандрівник:</span> {{ article_exect.autorsname }}</p>
+                        <p class="text-capitalize lead"><span class="fw-bold "> Мандрівник:</span> {{ article_exect.autorsname }}</p>
                     </div>
-                    <div class="col-2">
+                    <div class="col-2 lead">
                         <p> {{ article_exect.date.date() }}</p>
                     </div>
                 </div>

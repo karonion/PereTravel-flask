@@ -7,13 +7,14 @@ from models import db
 from flask_ckeditor import upload_fail, upload_success
 import os
 from __init__ import Message, Email, mail
+from re import sub
 
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'PNG', 'JPG', 'JPEG', 'GIF'}
 
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS  # Функция проверки формата загружаемого фото
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS  # Функция проверки формата загружаемого фото
 
 
 @app.route('/images/<path:filename>')  # Путь загужаемых файлов
@@ -27,6 +28,9 @@ def upload():
     extension = f.filename.split('.')[-1].lower()
     if extension not in ['jpg', 'gif', 'png', 'jpeg']:  # разрешённые форматы фото для загрузки
         return upload_fail(message='Тільки фото!')
+    regular_expression_result = sub(r'\(*\)*', '', f.filename)  # Функция скорее всего используетяс только CKEditor, нужно проверить - нужно ли здесь регулярное выражение
+    f.filename = regular_expression_result
+    print(f.filename)
     f.save(os.path.join(app.config['UPLOAD_FOLDER'], f.filename))
     url = url_for('uploaded_file', filename=f.filename)
     return upload_success(url, filename=f.filename)
@@ -75,6 +79,8 @@ def addpost():
         filename = 'default.jpeg'
         if file and allowed_file(file.filename):  # Загрузка фото-первью
             filename = file.filename
+            regular_expression_result = sub(r'\(*\)*', '', filename)
+            filename = regular_expression_result.strip()
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         article = Article(title=title, preview=preview, text=text, autorsname=name, filepath=filename)
         try:  # Запись в БД
@@ -83,7 +89,7 @@ def addpost():
             msg = Message(f'Новий пост!', sender='ig.vasylenko2@gmail.com', recipients=['karonion4ik@gmail.com'])  # Оправка емеил сообщения администратору
             msg.body = f'Був доданий новий пост від користувача {name}, {datetime.utcnow().date()}'
             mail.send(msg)
-            flash("Пост відправлений на модерацію, ми опрацюємо його найближчим часом", 'alert alert-success')
+            flash("Дякуємо за участь у проєкті!", 'alert alert-success')
             return redirect(url_for('main'))
         except Exception as e:
             return e
@@ -150,4 +156,11 @@ def send_feedback():
 @login_required
 def get_feedback():
     feedback_scope = Feedback_db.query.order_by(Feedback_db.created.desc())
-    return render_template('getfeedback.html', feedback_scope=feedback_scope)
+    return render_template('/admin/getfeedback.html', feedback_scope=feedback_scope)
+
+
+@app.route('/editpost')
+@login_required
+def edit_post():
+    article_scope = Article.query.order_by(Article.date.desc())  # Сортировка по дате создания
+    return render_template('admin/editpost.html', article_scope=article_scope)

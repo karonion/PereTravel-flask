@@ -6,16 +6,16 @@
     <div class="container">
         <br>
         <div class="raw">
-            <p class="h1 text-center"> Зворотній зв'язок</p>
+            <p class="display-4 text-center"> Зворотній зв'язок</p>
 {% for el in feedback_scope %}
         <div class="col-md-8 offset-md-2">
           <div class="card shadow-sm">
 
             <div class="card-body">
-              <p class="card-text">{{ el.text }}</p>
+              <p class="lead">{{ el.text }}</p>
               <div class="d-flex justify-content-between align-items-center">
-                  <small class=""><b>Створено:</b> {{ el.created.date() }}</small>
-                  <small class=""><b>Контакт:</b> {{ el.contact }}</small>
+                  <small class="lead    "><b>Створено:</b> {{ el.created.date() }}</small>
+                  <small class="lead"><b>Контакт:</b> {{ el.contact }}</small>
               </div>
             </div>
           </div>

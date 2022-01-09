@@ -17,15 +17,23 @@
           <div class="card shadow-sm">
                <svg class=" card-img-top" width="100%" height="300" style="background-image:url(http://127.0.0.1:5000/images/{{el.filepath}}); background-size:cover; background-repeat: no-repeat; background-position:center"  xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: {{ el.title }}" preserveAspectRatio="xMidYMid slice" focusable="false"></svg>
             <div class="card-body">
-              <p class="lead">{{ el.title }}</p>
+              <p class="card-text">{{ el.title }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <a href="/post/{{ el.id }}"><button type="button" class="btn btn-sm btn-outline-secondary btn-primary">Читати</button></a>
+
                 </div>
                 <small class="text-muted" style="font-size:11px">{{ el.preview }}</small>
                 <small class="text-muted" style="font-size:11px">{{ el.autorsname }}</small>
               </div>
+
             </div>
+            {% if current_user.is_authenticated %}
+            {% if current_user.email == 'admin@ukr.net' %}
+                 <button type="button" class="btn btn-sm btn-outline-info">Редагувати</button>
+                 <button type="button" class="btn btn-sm btn-outline-danger">Видалити</button>
+            {% endif %}
+            {% endif %}
           </div>
         </div>
 {% endfor %}
