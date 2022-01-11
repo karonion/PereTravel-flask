@@ -30,8 +30,14 @@
             </div>
             {% if current_user.is_authenticated %}
             {% if current_user.email == 'admin@ukr.net' %}
-                 <button type="button" class="btn btn-sm btn-outline-info">Редагувати</button>
-                 <button type="button" class="btn btn-sm btn-outline-danger">Видалити</button>
+              <div class='row align-items-start'>
+                  <div class="col-9">
+                  <a href="/post/{{ el.id }}/edit"><button type="button" class="btn btn-sm btn-outline-info" >Редагувати</button></a>
+                  </div>
+                  <div class="col">
+                  <a href="/post/{{ el.id }}/del"><button type="button" class="btn btn-sm btn-outline-danger" onclick="clicked(event)">Видалити</button></a>
+                  </div>
+              </div>
             {% endif %}
             {% endif %}
           </div>
@@ -40,4 +46,12 @@
       </div>
     </div>
   </div>
+<script>
+function clicked(e)
+{
+    if(!confirm('Ви впевнені?')) {
+        e.preventDefault();
+    }
+}
+</script>
 {% endblock %}

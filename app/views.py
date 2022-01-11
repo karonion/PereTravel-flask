@@ -110,11 +110,11 @@ def logout():
     return redirect('/')
 
 
-@app.route('/register', methods=['post', 'get'])
+@app.route('/register', methods=['post', 'get'])  # Форма регистрации
 def register():
-    message = ''
     if current_user.is_authenticated:  # Если человек уже авторизован, перенаправляем на главную
-        return redirect('/')
+        flash('Ви вже авторизовані!', 'alert alert-success')
+        return redirect(url_for('main'))
     form = RegisterForm()
     if form.validate_on_submit():
         first_name = form.first_name.data
@@ -152,10 +152,10 @@ def send_feedback():
             return e
     return render_template('/feedback.html', form=form)
 
-@app.route('/getfeedback')
+@app.route('/getfeedback')  # Фидбек для администратора
 @login_required
 def get_feedback():
-    feedback_scope = Feedback_db.query.order_by(Feedback_db.created.desc())
+    feedback_scope = Feedback_db.query.order_by(Feedback_db.created.desc())  # Список отсортирован в обратном порядке
     return render_template('/admin/getfeedback.html', feedback_scope=feedback_scope)
 
 
@@ -164,3 +164,41 @@ def get_feedback():
 def edit_post():
     article_scope = Article.query.order_by(Article.date.desc())  # Сортировка по дате создания
     return render_template('admin/editpost.html', article_scope=article_scope)
+
+
+@app.route('/post/<int:id>/edit', methods=['GET', 'POST'])  # Редактирование поста подробно
+@login_required
+def to_edit_post(id):
+    form = Addpost()
+    article = Article.query.get(id)
+    if request.method == 'POST':
+        article.title = request.form['title']
+        article.preview = request.form['preview']
+        article.text = form.body.data  # Ссылка на CKEditor
+        article.name = request.form['autorsname']
+        article.file = request.files['filepath']
+        article.filename = 'default.jpeg'
+        if article.file and allowed_file(article.file.filename):  # Загрузка фото-первью
+            filename = article.file.filename
+            regular_expression_result = sub(r'\(*\)*', '', filename)  # Поверяем, нет ли в имени символов, ломающих текст.
+            filename = regular_expression_result.strip()
+            article.file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        try:  # Запись в БД
+            db.session.commit()
+            return redirect('/editpost')
+        except Exception:
+            return 'Произошла неизвестная ошибка'
+    else:
+        form.body.data = article.text  # Получаем текст из поста. Неймспейс - верный. Если поднять на уровень выше - получится рекурсия.
+        return render_template('admin/posteditting.html', article=article, form=form)
+
+
+@app.route('/post/<int:id>/del')
+def delete_post(id):
+    article = Article.query.get_or_404(id)
+    try:
+        db.session.delete(article)
+        db.session.commit()
+        return redirect('/editpost')
+    except:
+        return 'При удалении произошла неизвестная ошибка'

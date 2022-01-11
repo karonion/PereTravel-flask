@@ -1,5 +1,5 @@
 {% extends 'basic.html' %}
-{% block title %}Додати маршрут{% endblock %}
+{% block title %}Редагувати маршрут{% endblock %}
 
 {% block body %}
  {{ form.csrf_token }}
@@ -7,26 +7,26 @@
 <div class="container ">
   <main>
     <div class="py-5 text-center">
-      <div class="display-4">Додати маршрут</div>
+      <div class="display-3">Редагування посту</div>
     </div>
       <div class="col-md-12 col-lg-12 align-self-center">
         <form class="needs-validation" method="post" enctype="multipart/form-data">
           <div class="row g-1 align-items-center ">
             <div class="col-md-6 offset-md-2">
               <label for="firstName" class="form-label">Ім'я</label>
-              <input name="autorsname" type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+              <input name="autorsname" type="text" class="form-control" id="firstName" placeholder="" value="{{ article.autorsname }}" required="">
               <div class="invalid-feedback">
                 Valid first name is required.
               </div>
             </div>
             <div class="col-md-6 offset-md-2">
               <label for="route" class="form-label">Назва машрута <span class="text-muted"></span></label>
-              <input name="title"  class="form-control" id="route" placeholder="Через Скандинавію" maxlength="40">
+              <input name="title"  class="form-control" id="route" placeholder="Через Скандинавію" maxlength="40" value="{{ article.title }}">
             </div>
 
             <div class="col-md-6 offset-md-2">
               <label for="address" class="form-label">Країна </label>
-              <input name="preview" type="text" class="form-control" id="address" placeholder="Данія" required="" maxlength="20">
+              <input name="preview" type="text" class="form-control" id="address" placeholder="Данія" required="" maxlength="20" value="{{ article.preview }}">
               <div class="invalid-feedback">
               </div>
             </div>
