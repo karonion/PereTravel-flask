@@ -30,7 +30,7 @@ app.config['MAIL_DEFAULT_SENDER'] = 'ig.vasylenko2@gmail.com'
 app.config['MAIL_PASSWORD'] = '1dn2qy36'
 mail = Mail(app)
 '''Настройки CKEditor, формы для работы с текстом'''
-app.config['CKEDITOR_PKG_TYPE'] = 'full-al'
+app.config['CKEDITOR_PKG_TYPE'] = 'full-all'
 app.config['CKEDITOR_LANGUAGE'] = 'ru'
 app.config['CKEDITOR_WIDTH'] = '1500'
 app.config['CKEDITOR_HEIGHT'] = '500'
