@@ -28,7 +28,8 @@ def upload():
     extension = f.filename.split('.')[-1].lower()
     if extension not in ['jpg', 'gif', 'png', 'jpeg']:  # разрешённые форматы фото для загрузки
         return upload_fail(message='Тільки фото!')
-    regular_expression_result = sub(r'\(*\)*', '', f.filename)  # Функция скорее всего используетяс только CKEditor, нужно проверить - нужно ли здесь регулярное выражение
+    regular_expression_result = sub(r'\(*\)*', '',
+                                    f.filename)  # Функция скорее всего используетяс только CKEditor, нужно проверить - нужно ли здесь регулярное выражение
     f.filename = regular_expression_result
     print(f.filename)
     f.save(os.path.join(app.config['UPLOAD_FOLDER'], f.filename))
@@ -50,7 +51,8 @@ def login():
         return render_template('main.html', message=message)
     form = LoginForm()
     if form.validate_on_submit():  # Если нажал кнопку отправки формы
-        user = db.session.query(User).filter(User.email == form.email.data).first()  # Сверяемся с первым результатом в БД
+        user = db.session.query(User).filter(
+            User.email == form.email.data).first()  # Сверяемся с первым результатом в БД
         if user and user.check_password(form.password.data):  # Проверяем хэш пароля на соответствие
             login_user(user, remember=form.remember.data)
             return redirect('/')  # Если пароль совпал
@@ -86,7 +88,8 @@ def addpost():
         try:  # Запись в БД
             db.session.add(article)
             db.session.commit()
-            msg = Message(f'Новий пост!', sender='ig.vasylenko2@gmail.com', recipients=['karonion4ik@gmail.com'])  # Оправка емеил сообщения администратору
+            msg = Message(f'Новий пост!', sender='ig.vasylenko2@gmail.com',
+                          recipients=['karonion4ik@gmail.com'])  # Оправка емеил сообщения администратору
             msg.body = f'Був доданий новий пост від користувача {name}, {datetime.utcnow().date()}'
             mail.send(msg)
             flash("Дякуємо за участь у проєкті!", 'alert alert-success')
@@ -112,7 +115,7 @@ def logout():
 
 @app.route('/register', methods=['post', 'get'])  # Форма регистрации
 def register():
-    if current_user.is_authenticated:  # Если человек уже авторизован, перенаправляем на главную
+    if current_user.is_authenticated:  # Если юзер уже авторизован, перенаправляем на главную
         flash('Ви вже авторизовані!', 'alert alert-success')
         return redirect(url_for('main'))
     form = RegisterForm()
@@ -122,14 +125,17 @@ def register():
         email = form.email.data
         password = form.password
         password_hash = generate_password_hash(password.data)  # Преобразуем пароль в хэш
-        user = User(First_Name=first_name, Last_Name=last_name, email=email, password_hash=password_hash)  # Записываем в БД
+        user = User(First_Name=first_name, Last_Name=last_name, email=email,
+                    password_hash=password_hash)  # Записываем в БД нового юзера
         try:
             db.session.add(user)
             db.session.commit()
-            msg = Message(f'Вдала реєстрація!', sender='ig.vasylenko2@gmail.com', recipients=[f'{email}'])  # Отправка сообщения пользователю
+            msg = Message(f'Вдала реєстрація!', sender='ig.vasylenko2@gmail.com',
+                          recipients=[f'{email}'])  # Отправка сообщения пользователю
             msg.html = render_template(r'Registration-email.html', login=email, password=password.data)
             mail.send(msg)
-            flash('Вдала реєстрація! Скористуйтесь логіном та паролем. Вони відправлені Вам на пошту.', 'alert alert-success')
+            flash('Вдала реєстрація! Скористуйтесь логіном та паролем. Вони відправлені Вам на пошту.',
+                  'alert alert-success')
             return redirect(url_for('login'))
         except Exception as e:
             return e
@@ -152,6 +158,7 @@ def send_feedback():
             return e
     return render_template('/feedback.html', form=form)
 
+
 @app.route('/getfeedback')  # Фидбек для администратора
 @login_required
 def get_feedback():
@@ -171,7 +178,7 @@ def edit_post():
 def to_edit_post(id):
     form = Addpost()
     article = Article.query.get(id)
-    if request.method == 'POST':
+    if request.method == 'POST':  # Если отправлена форма редактирования
         article.title = request.form['title']
         article.preview = request.form['preview']
         article.text = form.body.data  # Ссылка на CKEditor
@@ -180,8 +187,9 @@ def to_edit_post(id):
         article.filename = 'default.jpeg'
         if article.file and allowed_file(article.file.filename):  # Загрузка фото-первью
             filename = article.file.filename
-            regular_expression_result = sub(r'\(*\)*', '', filename)  # Поверяем, нет ли в имени символов, ломающих текст.
-            filename = regular_expression_result.strip()
+            regular_expression_result = sub(r'\(*\)*', '',
+                                            filename)  # Поверяем, нет ли в имени символов, ломающих текст.
+            filename = regular_expression_result.strip()  # Обрезаем лишние пробелы в названии файла
             article.file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         try:  # Запись в БД
             db.session.commit()
@@ -193,7 +201,7 @@ def to_edit_post(id):
         return render_template('admin/posteditting.html', article=article, form=form)
 
 
-@app.route('/post/<int:id>/del')
+@app.route('/post/<int:id>/del')  # Удаление поста
 def delete_post(id):
     article = Article.query.get_or_404(id)
     try:

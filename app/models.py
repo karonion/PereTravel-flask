@@ -29,7 +29,7 @@ class Article(db.Model):  # Посты, БД
         return '<Post %r>' % self.id
 
 
-class User(db.Model, UserMixin):  # Юзеры, БД
+class User(db.Model, UserMixin):  # Юзеры
     __tablename__ = 'Users'
     id = db.Column(db.Integer, primary_key=True)
     First_Name = db.Column(db.String(100), nullable=False)
@@ -49,7 +49,7 @@ class User(db.Model, UserMixin):  # Юзеры, БД
         return check_password_hash(self.password_hash, password)
 
 
-class Feedback_db(db.Model):  # Обратная связь, БД
+class Feedback_db(db.Model):  # Обратная связь
     __tablename__ = 'user_feedback'
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
@@ -86,6 +86,6 @@ class FeedbackForm(FlaskForm):  # Обратная связь, форма
     submit = SubmitField(label='Відправити')
 
 
-class Addpost(FlaskForm):
+class Addpost(FlaskForm):  # Тело CKEditor
     body = CKEditorField(validators=[DataRequired(message='Поле не може бути пустим'),
                                      length(min=30, message='Додайте опис до вашого маршруту!')])
